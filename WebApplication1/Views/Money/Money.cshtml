@@ -1,0 +1,98 @@
+﻿@model WebApplication1.Models.ViewModels.Combine
+
+@{
+    ViewBag.Title = "Money";
+    var i = 1;
+}
+
+<h2>Money</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.category, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="control-label col-md-2"><label>類別</label></div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Money.category, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Money.category, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.date, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="control-label col-md-2"><label>日期</label></div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Money.date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Money.date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.money, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="control-label col-md-2"><label>金額</label></div>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Money.money, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Money.money, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.memo, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="control-label col-md-2"><label>備註</label></div>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Money.memo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Money.memo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    <div>
+
+        @if (Model.Moneys != null)
+        {
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <th>#</th>
+                            <th>類別</th>
+                            <th>日期</th>
+                            <th>金額</th>
+                            <th>備註</th>
+                        </tr>
+                        @foreach (var item in Model.Moneys)
+                        {
+                            <tr>
+                                <td>@i.ToString()</td>
+                                <td>@item.category</td>
+                                <td>@item.date</td>
+                                <td>@item.money</td>
+                                <td>@item.memo</td>
+                            </tr>i++;
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
